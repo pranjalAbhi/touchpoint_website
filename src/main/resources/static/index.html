@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- Salesforce Web SDK Script for Page View + Custom Parameter -->
+    <script src="https://cdn.pc-rnd.c360a.salesforce.com/beacon/c360a/1920e91e-69c5-4c5d-88a9-ee8088518dc5/scripts/c360a.min.js"></script>
+
+    <script>
+     // Helper function to get a URL parameter
+     function getParam(param) {
+      return new URLSearchParams(window.location.search).get(param);
+     }
+
+     // Extract the custom parameter from URL
+     const touchpointId = getParam("touchpoint_id");
+     console.log(touchpointId);
+
+        // Initialize the SDK
+        SalesforceInteractions.init({
+            consents: [{
+                provider: "OneTrust",
+                purpose: SalesforceInteractions.ConsentPurpose.Tracking,
+                status: SalesforceInteractions.ConsentStatus.OptIn
+            }]
+        } )
+        SalesforceInteractions.setLoggingLevel(4);
+        SalesforceInteractions.sendEvent({
+         interaction: {
+          name: 'View Catalog Object',
+          catalogObject: {
+           type: 'Product',
+           id: touchpointId,
+           attributes: {
+            name: 'Product XYZ',
+            touchpoint_id: touchpointId,
+            sku: 'product-xyz-sku'
+           }
+          }
+         }
+        });
+
+    </script>
+
+
+    <meta charset="UTF-8">
+    <title>Spring Boot Landing Page</title>
+</head>
+<body>
+<h1>Welcome to Spring Boot</h1>
+<p>This is your static landing page served by embedded Tomcat.</p>
+</body>
+</html>
